@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<!--
+To change this license header, choose License Headers in Project Properties.
+To change this template file, choose Tools | Templates
+and open the template in the editor.
+-->
+<html>
+    <head>
+        <title>TODO supply a title</title>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <script src="resources/js/jquery-3.4.1.min.js"></script>
+        <link rel="stylesheet" type="text/css" href="resources/css/bootstrap.css"/>
+    </head>
+    <body>
+        <form>
+            <div class="form-gruop">
+                <label id="label_nome" for="nome">Nome:</label>
+                <input class="form-control" type="text" id="nome" name="nome" required/>                
+            </div>
+            
+            <button id="submit" class="btn btn-primary" type="submit">submit</button>
+        </form>
+        
+        <script>
+            $(document).ready(
+                function(){
+                    $('#label_nome').on('click', 
+                    function(){
+                        $(this).css('background-color', '#00FF00');
+                        $('#nome').val('nome');
+                        $('#submit').hide(500);
+                    });
+                }
+            );
+        </script>
+    </body>
+</html>
