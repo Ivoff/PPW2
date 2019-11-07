@@ -13,10 +13,40 @@ and open the template in the editor.
         <link rel="stylesheet" type="text/css" href="resources/css/bootstrap.css"/>
     </head>
     <body>
-        <form>
+        <form method="POST" action="cliente">
             <div class="form-gruop">
                 <label id="label_nome" for="nome">Nome:</label>
                 <input class="form-control" type="text" id="nome" name="nome" required/>                
+            </div>
+            
+            <div class="form-gruop">
+                <label id="label_cpf" for="cpf">CPF:</label>
+                <input class="form-control" type="text" id="cpf" name="cpf" required/>                
+            </div>
+            
+            <div class="form-gruop">
+                <label id="label_dataNasc" for="dataNasc">Data de nascimento:</label>
+                <input class="form-control" type="date" id="dataNasc" name="dataNasc" required/>                
+            </div>
+            
+            <div class="form-gruop">
+                <label id="label_email" for="email">Email:</label>
+                <input class="form-control" type="text" id="email" name="email" required/>                
+            </div>
+            
+            <div class="form-gruop">
+                <label id="label_telefone" for="telefone">Telefone:</label>
+                <input class="form-control" type="text" id="telefone" name="telefone" required/>                
+            </div>
+            
+            <div class="form-gruop">
+                <label id="label_genero" for="genero">Genero:</label>
+                <input class="form-control" type="text" id="genero" name="genero" required/>                
+            </div>
+            
+            <div class="form-gruop">
+                <label id="label_endereco" for="endereco">Endereco:</label>
+                <input class="form-control" type="text" id="endereco" name="endereco" required/>                
             </div>
             
             <button id="submit" class="btn btn-primary" type="submit">submit</button>
