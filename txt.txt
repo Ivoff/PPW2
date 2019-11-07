@@ -1,0 +1,34 @@
+JPA - Java persistence layer
+Especificação para ORMs (object relational mapping) java, a interação com as entidades no banco de dados é feita por classes, sem regras de negócios apenas getters e setters, que contém anotações com informações que relacionam e classe com a entidade no banco de dados. A implementação JPA irá precisar de um arquivo xml em uma pasta específica que contém cofigurações de conexão.
+
+Exemplo de uma classe que representa uma entidade no banco de dados:
+
+public class Tarefa{
+	private int;
+	private String descricao;
+	private boolean finalizado;
+	private Calendar dataFinalizado;
+
+	//Getters e Setters
+}
+
+A classe acima só representa a entidade do banco de dados na aplicação, não se coloca regras de negócio nesse tipo de classe, para isso existe DAO pattern ou Repository pattern.
+O arquivo persistence.xml contém todos os dados relacionados a conexão com o banco de dados. A parte mais importante é a tag <persistence-unit>, por meio dela a implementação JPA se conecta com o banco de dados, então para cada conexão com algum banco de dados será necessaria uma tag <persistence-unit>. Na tag são colocadas duas tags, a primeira é a <class> que indica quais classes no sistema que são visíveis a aquela conexão, a segunda é a <properties> na qual ficam os dados de conexão básicos como user, database, password e etc.
+
+Exemplo de classo com Annotations que mapeia a classe para o entidade no banco de dados:
+
+@Table(nome = "tarefa")
+@SequenceGenerator(name="seq_tarefa", sequenceName = "tarefa_id_seq", allocationSize = 1)
+public class Tarefa{
+	@Id
+	@GeneratedValue(generator = "seq_tarefa", strategy = GenerationType.SEQUENCE)
+	private int id;
+	@Column(name = "descricao")
+	private String descricao;
+	private boolean finalizado;
+	private Calendar dataFinalizado;
+
+	//Getters e Setters
+}
+
+A classe que controla a conexão é a EntityManager e a classe que cria o EntityManager é a EntityManagerFactory, nela é passado o nome da unidade de persistência. A classe EntityManager controla as transações.
