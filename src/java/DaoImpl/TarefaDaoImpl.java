@@ -31,7 +31,7 @@ public class TarefaDaoImpl implements TarefaDao{
         em.getTransaction().begin();
         
         if(!em.contains(t)){
-            em.refresh(t);
+            t = em.merge(t);
         }
         em.remove(t);
         em.getTransaction().commit();
