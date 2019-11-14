@@ -57,7 +57,38 @@
                         </th>
                         <th></th>                            
                     </tr>
+                </thead><form action="tarefa.jsp" method="POST">
+                <div class="form-gruop row">
+                    <div class="col-2">
+                        <label for="descricao">Descricao</label>
+                    </div>
+                    <div class="col">
+                        <input class="form-crontrol" type="text" name="descricao"/>
+                    </div>
+                    <button type="submit" class="btn btn-primary">Salvar</button>
+                </div>
+            </form>
+        </div>
+        
+        <div container="container">
+            <table class="table">
+                <thead class="thead-dark">
+                    <tr>
+                        <th scope="col">
+                            Descrição
+                        </th>
+                        <th></th>                            
+                    </tr>
                 </thead>
+                <tbody>
+                    <%for(Tarefa t: list){%>                        
+                        <tr>
+                            <td><%=t.getDescricao()%></td>
+                            <td><a href="tarefa.jsp?excluir=<%= t.getId()%>"><button class="btn btn-danger">Excluir</button></a></td>
+                        </tr>
+                    <%}%>                    
+                </tbody>
+            </table>
                 <tbody>
                     <%for(Tarefa t: list){%>                        
                         <tr>

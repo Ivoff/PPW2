@@ -5,12 +5,15 @@
  */
 package servelets;
 
+import DAO.ClienteDao;
+import DaoImpl.ClienteDaoImpl;
 import entidades.Cliente;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.List;
+import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
@@ -28,48 +31,29 @@ public class ClienteServlet extends HttpServlet {
             throws ServletException, IOException {
         
         Cliente cliente = new Cliente();
-        cliente.setNome(request.getParameter("nome"));
-        cliente.setCpf(request.getParameter("cpf"));
-        cliente.setEmail(request.getParameter("email"));
-        cliente.setTelefone(request.getParameter("telefone"));
-        cliente.setGenero(request.getParameter("genero"));
-        cliente.setEndereco(request.getParameter("endereco"));
+        ClienteDao dao = new ClienteDaoImpl();
         
-        try{
-            SimpleDateFormat date = new SimpleDateFormat("dd/mm/yyyy");
-            cliente.setDataNascimento(date.parse(request.getParameter("dataNasc")));
-        }catch(Exception e){
-        
+        if(request.getParameter("nome")!=null){
+            int id = Integer.parseInt(request.getParameter("id"));
+            cliente.setId(id);
+            cliente.setNome(request.getParameter("nome"));
+            cliente.setCpf(request.getParameter("cpf"));        
+            cliente.setTelefone(request.getParameter("telefone"));                                        
+            dao.save(cliente);
+        }else if(request.getParameter("excluir") != null){
+            int id = Integer.parseInt(request.getParameter("excluir"));
+            System.out.println(id);
+            System.out.println(dao.read(id).getNome());
+            dao.delete(dao.read(id));
+        }else if(request.getParameter("editar") != null){
+            int id = Integer.parseInt(request.getParameter("editar"));
+            cliente = dao.read(id);
+            request.setAttribute("cliente", cliente);
         }
-        
-        
-        response.setContentType("text/html;charset=UTF-8");
-        try (PrintWriter out = response.getWriter()) {
-            /* TODO output your page here. You may use following sample code. */
-            out.println("<!DOCTYPE html>");
-            out.println("<html>");
-            out.println("<head>");
-            out.println("<title>Cliente data</title>");            
-            out.println("</head>");
-            out.println("<body>");
-            out.println("<p>Nome: "+cliente.getNome()+"</p>");
-            out.println("<p>CPF: "+cliente.getCpf()+"</p>");
-            out.println("<p>Email: "+cliente.getEmail()+"</p>");
-            out.println("<p>Telefone: "+cliente.getTelefone()+"</p>");
-            out.println("<p>Genero: "+cliente.getGenero()+"</p>");
-            out.println("<p>Endereco: "+cliente.getEndereco()+"</p>");                        
-            out.println("</body>");
-            out.println("</html>");
-        }
-        
-        List<Cliente> list = (List<Cliente>) request.getSession().getAttribute("lista");
-        
-        if(list == null){
-            list = new ArrayList<Cliente>();            
-        }
-        
-        list.add(cliente);
-        request.getSession().setAttribute("lista", list);
+                
+        request.setAttribute("lista", dao.all());                        
+        RequestDispatcher view =  request.getRequestDispatcher("cliente.jsp");
+        view.forward(request, response);
     }
 
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">
