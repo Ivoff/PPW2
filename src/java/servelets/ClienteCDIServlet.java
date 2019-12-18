@@ -6,14 +6,10 @@
 package servelets;
 
 import DAO.ClienteDao;
-import DaoImpl.ClienteDaoImpl;
 import entidades.Cliente;
 import java.io.IOException;
 import java.io.PrintWriter;
-import java.text.SimpleDateFormat;
-import java.util.ArrayList;
-import java.util.List;
-import javax.servlet.RequestDispatcher;
+import javax.inject.Inject;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
@@ -24,36 +20,26 @@ import javax.servlet.http.HttpServletResponse;
  *
  * @author zilas
  */
-@WebServlet(name = "ClienteServlet", urlPatterns = {"/cliente"})
-public class ClienteServlet extends HttpServlet {
+@WebServlet(name = "ClienteCDIServlet", urlPatterns = {"/ClienteCDIServlet"})
+public class ClienteCDIServlet extends HttpServlet {
+
+    @Inject
+    private Cliente c;
     
-    protected void processRequest(HttpServletRequest request, HttpServletResponse response)
-            throws ServletException, IOException {
-        
-        Cliente cliente = new Cliente();
-        ClienteDao dao = new ClienteDaoImpl();
-        RequestDispatcher view =  request.getRequestDispatcher("cliente.jsp");
-        
-        if(request.getParameter("nome")!=null){
-            int id = Integer.parseInt(request.getParameter("id"));
-            cliente.setId(id);
-            cliente.setNome(request.getParameter("nome"));
-            cliente.setCpf(request.getParameter("cpf"));        
-            cliente.setTelefone(request.getParameter("telefone"));                                        
-            dao.save(cliente);
-        }else if(request.getParameter("excluir") != null){
-            int id = Integer.parseInt(request.getParameter("excluir"));
-            System.out.println(id);
-            System.out.println(dao.read(id).getNome());
-            dao.delete(dao.read(id));
-        }else if(request.getParameter("editar") != null){
-            int id = Integer.parseInt(request.getParameter("editar"));
-            cliente = dao.read(id);
-            request.setAttribute("cliente", cliente);
-        }
-                
-        request.setAttribute("lista", dao.all());        
-        view.forward(request, response);
+    @Inject
+    private ClienteDao dao;
+    
+    /**
+     * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
+     * methods.
+     *
+     * @param request servlet request
+     * @param response servlet response
+     * @throws ServletException if a servlet-specific error occurs
+     * @throws IOException if an I/O error occurs
+     */
+    protected void processRequest(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+        response.setContentType("text/html;charset=UTF-8");
     }
 
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">

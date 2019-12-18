@@ -24,19 +24,21 @@ import javax.servlet.http.HttpServletResponse;
  *
  * @author zilas
  */
-@WebServlet(name = "ClienteServlet", urlPatterns = {"/cliente"})
-public class ClienteServlet extends HttpServlet {
+@WebServlet(name = "ClienteJSTLServlet", urlPatterns = {"/clientejstl"})
+public class ClienteJSTLServlet extends HttpServlet {
     
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         
         Cliente cliente = new Cliente();
         ClienteDao dao = new ClienteDaoImpl();
-        RequestDispatcher view =  request.getRequestDispatcher("cliente.jsp");
+        RequestDispatcher view =  request.getRequestDispatcher("clientejstl.jsp");
         
         if(request.getParameter("nome")!=null){
-            int id = Integer.parseInt(request.getParameter("id"));
-            cliente.setId(id);
+            if(!request.getParameter("id").equals("")){
+                int id = Integer.parseInt(request.getParameter("id"));
+                cliente.setId(id);
+            }
             cliente.setNome(request.getParameter("nome"));
             cliente.setCpf(request.getParameter("cpf"));        
             cliente.setTelefone(request.getParameter("telefone"));                                        

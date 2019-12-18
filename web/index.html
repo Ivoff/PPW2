@@ -13,6 +13,12 @@ and open the template in the editor.
         <link rel="stylesheet" type="text/css" href="resources/css/bootstrap.css"/>
     </head>
     <body>
+        <h1 class="display-4 shadow-sm" id="teste">User Form</h1>
+        <div class="btn-group">
+            <button type="button" class="btn btn-secondary" id="teste">Add</button>
+            <button type="button" class="btn btn-primary" id="list">DashBoard</button>            
+        </div>
+        
         <form method="POST" action="cliente">
             <div class="form-gruop">
                 <label id="label_nome" for="nome">Nome:</label>
@@ -55,7 +61,7 @@ and open the template in the editor.
         <script>
             $(document).ready(
                 function(){
-                    $('#label_nome').on('click', 
+                    $('#teste').on('click',
                     function(){
                         $(this).css('background-color', '#00FF00');
                         $('#nome').val('nome');
